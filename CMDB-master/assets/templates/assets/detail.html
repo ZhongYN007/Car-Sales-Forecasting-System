@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}车辆详情{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'adminlet-2.4.10/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css' %}">
+{% endblock %}
+
+{% block breadcrumb %}
+<!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        车辆详情
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> 主页</a></li>
+        <li>车辆预览</li>车辆详情</li>
+      </ol>
+    </section>
+{% endblock %}
+
+{% block content %}
+
+     <!-- Main content -->
+    <section class="content">
+      <!-- Default box -->
+      <div class="box">
+
+        <div class="box-header with-border">
+            <h3 class="box-title"><strong class="btn btn-block btn-primary btn-lg">品牌：{{ asset.brand }}</strong></h3>
+
+            <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+              <i class="fa fa-minus"></i></button>
+            <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
+              <i class="fa fa-times"></i></button>
+            </div>
+        </div>
+
+        <div class="box-body">
+
+            <h4><b>概览:</b></h4>
+            <table border="1" class="table  table-responsive" style="border-left:3px solid deepskyblue;border-bottom:1px solid deepskyblue;border-right:3px solid deepskyblue;border-top: solid deepskyblue" >
+                <thead>
+                <tr>
+                    <th>品牌</th>
+                    <th>类型</th>
+                    <th>价格</th>
+                    <th>销量</th>
+                    <th>更新日期</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>{{ asset.brand }}</a></td>
+
+                    <td>{{ asset.type}}</td>
+
+                    <td>{{ asset.price|default_if_none:"-" }}</td>
+
+                    <td>{{ asset.sales|default_if_none:"-" }}</td>
+                    <td>{{ asset.update_date|date:"Y/m/d" }}</td>
+                </tr>
+                </tbody>
+            </table>
+            <br />
+
+            <h4><b>基本参数:</b></h4>
+            <table border="1" class="table  table-responsive" style="border-left:3px solid green;border-bottom:1px solid green">
+                <thead>
+                    <tr>
+                        <th>级别</th>
+                        <th>长*宽*高(mm)</th>
+                        <th>最高车速(km/h)</th>
+                        <th>整车质保</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>{{ inform.level|default_if_none:"-" }}</td>
+                    <td>{{ inform.volume|default_if_none:"-" }}</td>
+                    <td>{{ inform.speed|default_if_none:"-" }}</td>
+                    <td>{{ inform.protect|default_if_none:"-" }}</td>
+                </tr>
+                </tbody>
+            </table>
+
+            <h4><b>车身:</b></h4>
+            <table border="1" class="table  table-responsive" style="border-left:3px solid deepskyblue;border-bottom:1px solid deepskyblue">
+                <thead>
+                <tr>
+                    <th>长度</th>
+                    <th>宽度</th>
+                    <th>高度</th>
+                    <th>轴距</th>
+                    <th>前轮距</th>
+                    <th>后轮距</th>
+                    <th>整备质量</th>
+                    <th>车身结构</th>
+                    <th>车门数</th>
+                    <th>座位数</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>{{ inform.length|default_if_none:"-" }}</td>
+                    <td>{{ inform.width|default_if_none:"-" }}</td>
+                    <td>{{ inform.height|default_if_none:"-" }}</td>
+                    <td>{{ inform.wheelbase|default_if_none:"-" }}</td>
+                    <td>{{ inform.front_track|default_if_none:"-" }}</td>
+                    <td>{{ inform.rear_wheelbase|default_if_none:"-" }}</td>
+                    <td>{{ inform.weight|default_if_none:"-" }}</td>
+                    <td>{{ inform.level|default_if_none:"-" }}</td>
+                    <td>{{ inform.doors|default_if_none:"-" }}</td>
+                    <td>{{ inform.seats|default_if_none:"-" }}</td>
+                </tr>
+                </tbody>
+            </table>
+
+            <h4><b>发动机:</b></h4>
+            <table border="1" class="table  table-responsive" style="border-left:3px solid orangered;border-bottom:1px solid orangered">
+                <thead>
+                    <tr>
+                        <th>最大功率</th>
+                        <th>最大扭矩</th>
+                        <th>燃料形式</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ inform.power|default_if_none:"-" }}</td>
+                        <td>{{ inform.torque|default_if_none:"-" }}</td>
+                        <td>{{ inform.fuel|default_if_none:"-" }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- /.box-body -->
+
+
+
+        <div class="box-footer">
+          <i class="fa fa-angle-double-left"></i>&nbsp;&nbsp;<a href="{% url 'assets:index' %}"><strong>返回资产列表页</strong></a>
+        </div>
+        <!-- /.box-footer-->
+      </div>
+      <!-- /.box -->
+
+    </section>
+    <!-- /.content -->
+
+
+{% endblock %}
+
+{% block script %}
+
+{% endblock %}

@@ -1,0 +1,529 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}汽车销量预测分析{% endblock %}
+{% block css %}{% endblock %}
+
+{% block breadcrumb %}
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1>
+    汽车销量预测分析
+    <small>Prediction</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-dashboard"></i> 主页</a></li>
+    <li class="active">汽车销量预测分析</li>
+  </ol>
+</section>
+{% endblock %}
+
+{% block content %}
+
+<!-- Main content -->
+<section class="content">
+  <div class="row">
+    <!-- row -->
+    <div class="col-md-12">
+      <!-- jQuery Knob -->
+      <div class="box box-solid">
+        <div class="box-header">
+          <i class="fa fa-bar-chart-o"></i>
+
+          <h3 class="box-title">市场份额<small>(%)</small></h3>
+
+          <div class="box-tools pull-right">
+            <button type="button" class="btn btn-default btn-sm" data-widget="collapse"><i class="fa fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-default btn-sm" data-widget="remove"><i class="fa fa-times"></i>
+            </button>
+          </div>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+          <div class="row">
+            <div class="col-xs-6 col-md-2 col-md-offset-1 text-center">
+              <input type="text" class="knob" value="{{ up_rate }}" data-width="90" data-height="90" data-fgColor="#FF0000" data-readonly="true">
+
+              <div class="knob-label">紧凑型车</div>
+            </div>
+            <!-- ./col -->
+            <div class="col-xs-6 col-md-2 text-center">
+              <input type="text" class="knob" value="{{ o_rate }}" data-width="90" data-height="90" data-fgColor="#f56954" data-readonly="true">
+
+              <div class="knob-label">微型车</div>
+            </div>
+            <!-- ./col -->
+
+
+            <div class="col-xs-6 col-md-2 text-center">
+              <input type="text" class="knob" value="{{ bd_rate }}" data-width="90" data-height="90" data-fgColor="#932ab6" data-readonly="true">
+
+              <div class="knob-label">小型车</div>
+            </div>
+            <!-- ./col -->
+            <div class="col-xs-6 col-md-2 text-center">
+              <input type="text" class="knob" value="{{ bu_rate }}" data-width="90" data-height="90" data-fgColor="#3c8dbc" data-readonly="true">
+
+              <div class="knob-label">中大型车</div>
+            </div>
+            <!-- ./col -->
+            <div class="col-xs-6 col-md-2 text-center">
+              <input type="text" class="knob" value="{{ un_rate }}" data-width="90" data-height="90" data-fgColor="#00a65a" data-readonly="true">
+
+              <div class="knob-label">电动汽车</div>
+            </div>
+            <!-- ./col -->
+          </div>
+          <!-- /.row -->
+        </div>
+        <!-- /.box-body -->
+      </div>
+      <!-- /.box -->
+    </div>
+    <!-- /.col -->
+
+
+    <div class="col-md-6">
+      <!-- BAR CHART -->
+      <div class="box box-success">
+
+        <div class="box-header with-border">
+          <h3 class="box-title">各类型车销量统计：</h3>
+
+          <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+          </div>
+        </div>
+        <div class="box-body">
+          {# 百度Echarts实现柱状图#}
+          <div id="barChart" style="width: 600px;height:400px;"></div>
+        </div>
+        <!-- /.box-body -->
+      </div>
+      <div class="box box-success">
+        <div class="box-header with-border">
+          <h3 class="box-title">车辆销量预测：</h3>
+          <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+          </div>
+        </div>
+        <div class="box-body">
+          {# 百度Echarts实现折线图#}
+          <div id="lineChart" style="width: 600px;height:400px;"></div>
+          <div>
+            <button id="lineButton1" type="button" class="btn btn-primary btn-sm active" onclick="switchLine(1)">紧凑型车</button>
+            <button id="lineButton2" type="button" class="btn btn-primary btn-sm active" onclick="switchLine(2)">微型车</button>
+            <button id="lineButton3" type="button" class="btn btn-primary btn-sm active" onclick="switchLine(3)">小型车</button>
+            <button id="lineButton4" type="button" class="btn btn-primary btn-sm active" onclick="switchLine(4)">中大型车</button>
+            <button id="lineButton5" type="button" class="btn btn-primary btn-sm active" onclick="switchLine(5)">电动汽车</button>
+            <!-- 添加更多按钮以切换更多折线 -->
+          </div>
+        </div>
+        <!-- /.box-body -->
+      </div>
+    </div>
+
+
+
+    <div class="col-md-6">
+      <!-- DONUT CHART -->
+      <div class="box box-danger">
+        <div class="box-header with-border">
+          <h3 class="box-title">360度看车：</h3>
+
+          <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+          </div>
+        </div>
+        <div class="box-body">
+          {# 3D模型 #}
+          <div id="3dModelContainer" style="width: 600px;height:400px;"></div>
+          <!-- 添加切换模型的按钮 -->
+          <button id="btnSwitchModel1" class="btn btn-primary">切换模型1</button>
+          <button id="btnSwitchModel2" class="btn btn-primary">切换模型2</button>
+          <button id="btnSwitchModel3" class="btn btn-primary">切换模型3</button>
+          <button id="btnSwitchModel4" class="btn btn-primary">切换模型4</button>
+          <button id="btnSwitchModel5" class="btn btn-primary">切换模型5</button>
+        </div>
+        <!-- /.box-body -->
+      </div>
+    <!-- DONUT CHART -->
+      <div class="box box-danger">
+        <div class="box-header with-border">
+          <h3 class="box-title">各类型车销量统计：</h3>
+
+          <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+          </div>
+        </div>
+        <div class="box-body">
+          {# 百度Echarts实现饼状图#}
+          <div id="donutChart" style="width: 600px;height:400px;"></div>
+        </div>
+        <!-- /.box-body -->
+      </div>
+      <!-- /.box -->
+    </div>
+    <!-- /.col (RIGHT) -->
+  </div>
+  <!-- /.row -->
+
+</section>
+<!-- /.content -->
+
+{% endblock %}
+
+{% block script %}
+<script src="https://cdn.babylonjs.com/babylon.js"></script>
+<script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
+<script src="https://cdn.bootcss.com/echarts/4.2.1/echarts.min.js"></script>
+<!-- AdminLTE App -->
+<script src="{% static 'adminlet-2.4.10/bower_components/jquery-knob/js/jquery.knob.js' %}"></script>
+<!-- page script -->
+
+<script type="text/javascript">
+
+  // 顶部服务器状态百分率圆图
+  $(function () {
+    /* jQueryKnob */
+
+    $(".knob").knob({
+      /*change : function (value) {
+//console.log("change : " + value);
+},
+release : function (value) {
+console.log("release : " + value);
+},
+cancel : function () {
+console.log("cancel : " + this.value);
+},*/
+      draw: function () {
+        // "tron" case
+        if (this.$.data('skin') == 'tron'
+        ) {
+
+          var a = this.angle(this.
+
+                  cv)  // Angle
+                  , sa = this.
+                  startAngle          // Previous start angle
+                  , sat = this.startAngle         // Start angle
+                  , ea                            // Previous end angle
+                  , eat = sat + a                 // End angle
+                  , r = true;
+
+          this.g.lineWidth = this.lineWidth;
+
+          this.o.cursor
+          && (sat = eat - 0.3)
+          && (eat = eat + 0.3);
+
+          if (this.o.displayPrevious) {
+            ea = this.startAngle + this.angle(this.value);
+            this.o.cursor
+            && (sa = ea - 0.3)
+            && (ea = ea + 0.3);
+            this.g.beginPath();
+            this.g.strokeStyle = this.previousColor;
+            this.g.arc(this.xy, this.xy, this.radius - this.lineWidth, sa, ea, false);
+            this.g.stroke();
+          }
+
+          this.g.beginPath();
+          this.g.strokeStyle = r ? this.o.fgColor : this.fgColor;
+          this.g.arc(this.xy, this.xy, this.radius - this.lineWidth, sat, eat, false);
+          this.g.stroke();
+
+          this.g.lineWidth = 2;
+          this.g.beginPath();
+          this.g.strokeStyle = this.o.fgColor;
+          this.g.arc(this.xy, this.xy, this.radius - this.lineWidth + 1 + this.lineWidth * 2 / 3, 0, 2 * Math.PI, false);
+          this.g.stroke();
+
+          return false;
+        }
+      }
+    });
+    /* END JQUERY KNOB */
+  });
+
+  //不同状态资产数量统计 柱状图
+  $(function () {
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('barChart'));
+
+    // 指定图表的配置项和数据
+    var option = {
+      color: ['#3398DB'],
+      title: {
+        text: '数量(万台)'
+      },
+      tooltip: {},
+      legend: { data:['']
+      },
+      xAxis: {
+        data: ["紧凑型车", "微型车","小型车","中大型车","电动汽车"] },
+      yAxis: {
+      },
+      series:
+              [{
+                name: '数量',
+                type: 'bar',
+                barWidth: '50%',
+                data: [{{ upline }}, {{ offline }}, {{ breakdown }}, {{ backup }}, {{ unknown }}]
+  }]
+  };
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+  });
+
+  //资产类型数量统计 饼图
+  $(function () {
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('donutChart'));
+
+    // 指定图表的配置项和数据
+    option = {
+      title : {
+        x:'center'
+      },
+      tooltip : {
+        trigger: 'item',
+        formatter: "{a} <br/>{b} : {c} ({d}%)"
+      },
+      legend: {
+        orient: 'vertical',
+        left: 'left',
+        data: ['紧凑型车','微型车','小型车','中大型车','电动汽车']
+      },
+      series : [
+        {
+          name: '销量(万台)',
+          type: 'pie',
+          radius : '55%',
+          center: ['50%', '60%'],
+          data:[
+            {value:{{ server_number }}, name:'紧凑型车'},
+    {value:{{ networkdevice_number }}, name:'微型车'},
+    {value:{{ storagedevice_number }}, name:'小型车'},
+    {value:{{ securitydevice_number }}, name:'中大型车'},
+    {value:{{ software_number }}, name:'电动汽车'}
+  ],
+    itemStyle: {
+      emphasis: {
+        shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: 'rgba(0, 0, 0, 0.5)'
+      }
+    }
+  }
+  ]
+  };
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+  });
+
+  // 初始化echarts实例
+  var myChart = echarts.init(document.getElementById('lineChart'));
+
+  // 初始化折线图的数据
+  var lineData1 = [{{ data_point1 }}, {{ data_point2 }}, {{ data_point3 }}, {{ data_point4 }}, {{ data_point5 }}, {{ data_point6 }}, {{ data_point7 }}];
+  var lineData2 = [{{ data_point8 }}, {{ data_point9 }}, {{ data_point10}}, {{ data_point11}}, {{ data_point12}}, {{ data_point13}}, {{ data_point14}}];
+  var lineData3 = [{{ data_point15 }}, {{ data_point16}}, {{ data_point17}}, {{ data_point18}}, {{ data_point19}}, {{ data_point20}}, {{ data_point21}}];
+  var lineData4 = [{{ data_point22 }}, {{ data_point23 }}, {{ data_point24 }}, {{ data_point25}}, {{ data_point26}}, {{ data_point27}}, {{ data_point28}}];
+  var lineData5 = [{{ data_point29 }}, {{ data_point30 }}, {{ data_point31 }}, {{ data_point32 }}, {{ data_point33}}, {{ data_point34}}, {{ data_point35}}];
+
+  // 初始显示折线1
+  renderLineChart(lineData1);
+
+  // 函数：渲染折线图
+  function renderLineChart(data) {
+    var option = {
+      tooltip: {
+        trigger: 'axis',
+        formatter: "{a} <br/>{b} : {c}"
+      },
+      legend: {
+        data: ['销量']
+      },
+      xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: ['2018', '2019', '2020', '2021', '2022', '2023', '2024']
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series: [{
+        name: '折线图',
+        type: 'line',
+        data: data
+      }]
+    };
+    myChart.setOption(option);
+  }
+
+  // 函数：切换折线
+  function switchLine(lineNumber) {
+    if (lineNumber === 1) {
+      renderLineChart(lineData1);
+    } else if (lineNumber === 2) {
+      renderLineChart(lineData2);
+    } else if (lineNumber === 3) {
+      renderLineChart(lineData3);
+    } else if (lineNumber === 4) {
+      renderLineChart(lineData4);
+    } else if (lineNumber === 5) {
+      renderLineChart(lineData5);
+    }// 可以继续添加更多折线的切换逻辑
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    var container = document.getElementById("3dModelContainer");
+    var canvas = document.createElement("canvas");
+    canvas.style.width = "92%";
+    canvas.style.height = "100%";
+    container.appendChild(canvas);
+
+    var engine = new BABYLON.Engine(canvas, true);
+    var scene = new BABYLON.Scene(engine);
+    var currentModelIndex = 0;
+
+    // 模型路径数组
+    var modelPaths = [
+      "3DXY.gltf",
+      "3DXY1.gltf",
+      "3DXY2.gltf",
+      "3DXY3.gltf",
+      "3DXY4.gltf"
+    ];
+
+    // 加载模型
+    function loadModel() {
+      var modelPath = modelPaths[currentModelIndex];
+
+      BABYLON.SceneLoader.Append("/static/", modelPath, scene, function (loadedScene) {
+        console.log("Success! Loaded model: " + modelPath);
+      });
+    }
+
+    // 设置场景的背景颜色为黑色
+    scene.clearColor = new BABYLON.Color3(1, 1, 1);
+
+    var camera = new BABYLON.ArcRotateCamera("Camera", Math.PI / 2, Math.PI / 4, 4, new BABYLON.Vector3(0, 0, 0), scene);
+    camera.attachControl(canvas, true);
+
+    var light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);
+    light.intensity = 0.7;
+
+    // 切换模型的按钮点击事件
+    document.getElementById("btnSwitchModel1").addEventListener("click", function () {
+      // 增加模型索引，循环加载
+      currentModelIndex = 0;
+      // 清空场景
+      scene.dispose();
+      // 重新初始化场景
+      scene = new BABYLON.Scene(engine);
+      // 设置场景的背景颜色为黑色
+      scene.clearColor = new BABYLON.Color3(1, 1, 1);
+
+      var camera = new BABYLON.ArcRotateCamera("Camera", Math.PI / 2, Math.PI / 4, 4, new BABYLON.Vector3(0, 0, 0), scene);
+      camera.attachControl(canvas, true);
+
+      var light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);
+      light.intensity = 0.7;
+      // 重新加载模型
+      loadModel();
+    });
+    document.getElementById("btnSwitchModel2").addEventListener("click", function () {
+      // 增加模型索引，循环加载
+      currentModelIndex = 1;
+      // 清空场景
+      scene.dispose();
+      // 重新初始化场景
+      scene = new BABYLON.Scene(engine);
+      // 设置场景的背景颜色为黑色
+      scene.clearColor = new BABYLON.Color3(1, 1, 1);
+
+      var camera = new BABYLON.ArcRotateCamera("Camera", Math.PI / 2, Math.PI / 4, 4, new BABYLON.Vector3(0, 0, 0), scene);
+      camera.attachControl(canvas, true);
+
+      var light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);
+      light.intensity = 0.7;
+      // 重新加载模型
+      loadModel();
+    });
+    document.getElementById("btnSwitchModel3").addEventListener("click", function () {
+      // 增加模型索引，循环加载
+      currentModelIndex = 2;
+      // 清空场景
+      scene.dispose();
+      // 重新初始化场景
+      scene = new BABYLON.Scene(engine);
+      // 设置场景的背景颜色为黑色
+      scene.clearColor = new BABYLON.Color3(1, 1, 1);
+
+      var camera = new BABYLON.ArcRotateCamera("Camera", Math.PI / 2, Math.PI / 4, 4, new BABYLON.Vector3(0, 0, 0), scene);
+      camera.attachControl(canvas, true);
+
+      var light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);
+      light.intensity = 0.7;
+      // 重新加载模型
+      loadModel();
+    });
+    document.getElementById("btnSwitchModel4").addEventListener("click", function () {
+      // 增加模型索引，循环加载
+      currentModelIndex = 3;
+      // 清空场景
+      scene.dispose();
+      // 重新初始化场景
+      scene = new BABYLON.Scene(engine);
+      // 设置场景的背景颜色为黑色
+      scene.clearColor = new BABYLON.Color3(1, 1, 1);
+
+      var camera = new BABYLON.ArcRotateCamera("Camera", Math.PI / 2, Math.PI / 4, 4, new BABYLON.Vector3(0, 0, 0), scene);
+      camera.attachControl(canvas, true);
+
+      var light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);
+      light.intensity = 0.7;
+      // 重新加载模型
+      loadModel();
+    });
+    document.getElementById("btnSwitchModel5").addEventListener("click", function () {
+      // 增加模型索引，循环加载
+      currentModelIndex = 4;
+      // 清空场景
+      scene.dispose();
+      // 重新初始化场景
+      scene = new BABYLON.Scene(engine);
+      // 设置场景的背景颜色为黑色
+      scene.clearColor = new BABYLON.Color3(1, 1, 1);
+
+      var camera = new BABYLON.ArcRotateCamera("Camera", Math.PI / 2, Math.PI / 4, 4, new BABYLON.Vector3(0, 0, 0), scene);
+      camera.attachControl(canvas, true);
+
+      var light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);
+      light.intensity = 0.7;
+      // 重新加载模型
+      loadModel();
+    });
+    // 初始化加载第一个模型
+    loadModel();
+
+    engine.runRenderLoop(function () {
+      scene.render();
+    });
+
+    window.addEventListener("resize", function () {
+      engine.resize();
+    });
+  });
+</script>
+
+{% endblock %}
