@@ -1,0 +1,177 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}评分排行{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'adminlet-2.4.10/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css' %}">
+{% endblock %}
+
+{% block breadcrumb %}
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1>
+    评分排行
+    <small>Sales ranking</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-dashboard"></i> 主页</a></li>
+    <li class="active">评分排行</li>
+  </ol>
+</section>
+{% endblock %}
+
+{% block content %}
+
+<!-- Main content -->
+<section class="content">
+  <div class="row">
+    <div class="col-xs-12">
+
+      <div class="box">
+        <div class="box-header">
+          <h3 class="box-title">评分排行</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+
+          <table id="assets_table" class="table table-bordered table-striped">
+            <thead>
+            <tr>
+              <th>序号</th>
+              <th>类型</th>
+              <th>价格</th>
+              <th>品牌</th>
+              <th>评分</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr>
+              <td>1</td>
+              <td>幻影</td>
+              <td>847.00-986.00万</td>
+              <td>劳斯莱斯</td>
+              <td>4.71</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>古思特</td>
+              <td>503.00-577.00万</td>
+              <td>劳斯莱斯</td>
+              <td>4.70</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>库里南</td>
+              <td>691.00-745.00万</td>
+              <td>劳斯莱斯</td>
+              <td>4.67</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>飞驰</td>
+              <td>691.00-745.00万</td>
+              <td>宾利</td>
+              <td>4.52</td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td>添越</td>
+              <td>275.50-411.20万</td>
+              <td>宾利</td>
+              <td>4.46</td>
+            </tr>
+            <tr>
+              <td>6</td>
+              <td>迈巴赫S级</td>
+              <td>275.50-411.20万</td>
+              <td>梅赛德斯-迈巴赫</td>
+              <td>4.43</td>
+            </tr>
+            <tr>
+              <td>7</td>
+              <td>迈巴赫GLS</td>
+              <td>183.30-312.10万</td>
+              <td>梅赛德斯-迈巴赫</td>
+              <td>4.40</td>
+            </tr>
+            <tr>
+              <td>8</td>
+              <td>Urus</td>
+              <td>294.11-329.73万</td>
+              <td>兰博基尼</td>
+              <td>4.39</td>
+            </tr>
+            <tr>
+              <td>9</td>
+              <td>奥迪S8</td>
+              <td>294.11-329.73万</td>
+              <td>奥迪</td>
+              <td>4.39</td>
+            </tr>
+            <tr>
+              <td>10</td>
+              <td>揽胜</td>
+              <td>142.80-335.80万</td>
+              <td>路虎</td>
+              <td>4.38</td>
+            </tr>
+
+            </tbody>
+          </table>
+        </div>
+        <!-- /.box-body -->
+      </div>
+      <!-- /.box -->
+    </div>
+    <!-- /.col -->
+  </div>
+  <!-- /.row -->
+</section>
+
+{% endblock %}
+
+{% block script %}
+
+<script src="{% static 'adminlet-2.4.10/bower_components/datatables.net/js/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'adminlet-2.4.10/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js' %}"></script>
+<!-- Bootstrap 4 -->
+<script src="{% static 'adminlet-2.4.10/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<!-- ChartJS -->
+<script src="{% static 'adminlet-2.4.10/plugins/chart.js/Chart.min.js' %}"></script>
+<!-- Sparkline -->
+<script src="{% static 'adminlet-2.4.10/plugins/sparklines/sparkline.js' %}"></script>
+<!-- JQVMap -->
+<script src="{% static 'adminlet-2.4.10/plugins/jqvmap/jquery.vmap.min.js' %}"></script>
+<script src="{% static 'adminlet-2.4.10/plugins/jqvmap/maps/jquery.vmap.world.js' %}"></script>
+<!-- jQuery Knob Chart -->
+<script src="{% static 'adminlet-2.4.10/plugins/jquery-knob/jquery.knob.min.js' %}"></script>
+<!-- daterangepicker -->
+<script src="{% static 'adminlet-2.4.10/plugins/moment/moment.min.js' %}"></script>
+<script src="{% static 'adminlet-2.4.10/plugins/daterangepicker/daterangepicker.js' %}"></script>
+<!-- Tempusdominus Bootstrap 4 -->
+<script src="{% static 'adminlet-2.4.10/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js' %}"></script>
+<!-- Summernote -->
+<script src="{% static 'adminlet-2.4.10/plugins/summernote/summernote-bs4.min.js' %}"></script>
+<!-- overlayScrollbars -->
+<script src="{% static 'adminlet-2.4.10/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js' %}"></script>
+<!-- AdminLTE App -->
+<script src="{% static 'adminlet-2.4.10/dist/js/adminlte.js' %}"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src="{% static 'adminlet-2.4.10/dist/js/pages/dashboard.js' %}"></script>
+<script>
+
+  $(function () {
+    $('#assets_table').DataTable({
+      "paging": true,       <!-- 允许分页 -->
+      "lengthChange": true, <!-- 允许改变每页显示的行数 -->
+      "searching": true,    <!-- 允许内容搜索 -->
+      "ordering": true,     <!-- 允许排序 -->
+      "info": true,         <!-- 显示信息 -->
+      "autoWidth": false    <!-- 固定宽度 -->
+    });
+  });
+
+</script>
+
+{% endblock %}

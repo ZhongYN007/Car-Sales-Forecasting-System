@@ -1,0 +1,46 @@
+/* 全局样式 */
+body {
+  height: 100vh;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-image: url('../image/car.jpg');
+  background-size: cover;
+}
+
+/* 注册表单样式 */
+.form-register {
+  width: 100%;
+  max-width: 380px;
+  padding: 15px;
+  margin: 130px auto; /* 将上边距调整为 80px，垂直居中 */
+  background-color: rgba(199, 210, 243, 0.47);
+  border-radius: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 表单组样式 */
+.form-group {
+  margin-bottom: 15px;
+}
+
+
+
+.form-register button {
+  width: 82%; /* 设定按钮宽度为表单的一半 */
+  margin: -2% 1%; /* 居中按钮 */
+  padding: 6px;
+  background-color: #4285f4;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 18px;
+  display: block;
+}
+
+/* 表单链接样式 */
+form a {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #333;
+  text-decoration: none;
+}

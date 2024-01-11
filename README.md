@@ -1,2 +1,1 @@
-# Car-Sales-Forecasting-System
-This is a program made by groupwork team two,from Sept 25 to Jan 13.
+# 汽车销量预测系统，来自华中师范大学寒假实训

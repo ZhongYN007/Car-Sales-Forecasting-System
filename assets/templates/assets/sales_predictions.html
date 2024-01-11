@@ -1,0 +1,358 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}汽车销量预测分析{% endblock %}
+{% block css %}{% endblock %}
+
+{% block breadcrumb %}
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        销量预测
+        <small>Prediction</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> 主页</a></li>
+        <li class="active">销量预测</li>
+    </ol>
+</section>
+{% endblock %}
+
+{% block content %}
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">SARIMA模型</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    {# 百度Echarts实现折线图#}
+                    <div id="lineChart" style="width: 600px;height:400px;"></div>
+                    <div>
+                        <button id="lineButton1" type="button" class="btn btn-primary btn-sm active" onclick="switchLine(1)">紧凑型车</button>
+                        <button id="lineButton2" type="button" class="btn btn-primary btn-sm active" onclick="switchLine(2)">微型车</button>
+                        <button id="lineButton3" type="button" class="btn btn-primary btn-sm active" onclick="switchLine(3)">小型车</button>
+                        <button id="lineButton4" type="button" class="btn btn-primary btn-sm active" onclick="switchLine(4)">中大型车</button>
+                        <button id="lineButton5" type="button" class="btn btn-primary btn-sm active" onclick="switchLine(5)">电动汽车</button>
+                        <!-- 添加更多按钮以切换更多折线 -->
+                    </div>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">RNN模型</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    {# 百度Echarts实现折线图#}
+                    <div id="lineChart1" style="width: 600px;height:400px;"></div>
+                    <div>
+                        <button id="lineButton6" type="button" class="btn btn-primary btn-sm active" onclick="switchLine1(1)">紧凑型车</button>
+                        <button id="lineButton7" type="button" class="btn btn-primary btn-sm active" onclick="switchLine1(2)">微型车</button>
+                        <button id="lineButton8" type="button" class="btn btn-primary btn-sm active" onclick="switchLine1(3)">小型车</button>
+                        <button id="lineButton9" type="button" class="btn btn-primary btn-sm active" onclick="switchLine1(4)">中大型车</button>
+                        <button id="lineButton10" type="button" class="btn btn-primary btn-sm active" onclick="switchLine1(5)">电动汽车</button>
+                        <!-- 添加更多按钮以切换更多折线 -->
+                    </div>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+
+
+
+        <div class="col-md-6">
+            <div class="box box-danger">
+                <div class="box-header with-border">
+                    <h3 class="box-title">LSTM模型</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    {# 百度Echarts实现折线图#}
+                    <div id="lineChart2" style="width: 600px;height:400px;"></div>
+                    <div>
+                        <button id="lineButton11" type="button" class="btn btn-primary btn-sm active" onclick="switchLine2(1)">紧凑型车</button>
+                        <button id="lineButton12" type="button" class="btn btn-primary btn-sm active" onclick="switchLine2(2)">微型车</button>
+                        <button id="lineButton13" type="button" class="btn btn-primary btn-sm active" onclick="switchLine2(3)">小型车</button>
+                        <button id="lineButton14" type="button" class="btn btn-primary btn-sm active" onclick="switchLine2(4)">中大型车</button>
+                        <button id="lineButton15" type="button" class="btn btn-primary btn-sm active" onclick="switchLine2(5)">电动汽车</button>
+                        <!-- 添加更多按钮以切换更多折线 -->
+                    </div>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <div class="box box-danger">
+                <div class="box-header with-border">
+                    <h3 class="box-title">ARIMA模型</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    {# 百度Echarts实现折线图#}
+                    <div id="lineChart3" style="width: 600px;height:400px;"></div>
+                    <div>
+                        <button id="lineButton16" type="button" class="btn btn-primary btn-sm active" onclick="switchLine3(1)">紧凑型车</button>
+                        <button id="lineButton17" type="button" class="btn btn-primary btn-sm active" onclick="switchLine3(2)">微型车</button>
+                        <button id="lineButton18" type="button" class="btn btn-primary btn-sm active" onclick="switchLine3(3)">小型车</button>
+                        <button id="lineButton19" type="button" class="btn btn-primary btn-sm active" onclick="switchLine3(4)">中大型车</button>
+                        <button id="lineButton20" type="button" class="btn btn-primary btn-sm active" onclick="switchLine3(5)">电动汽车</button>
+                        <!-- 添加更多按钮以切换更多折线 -->
+                    </div>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+        <!-- /.col (RIGHT) -->
+    </div>
+    <!-- /.row -->
+
+</section>
+<!-- /.content -->
+
+{% endblock %}
+
+{% block script %}
+<script src="https://cdn.babylonjs.com/babylon.js"></script>
+<script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
+<script src="https://cdn.bootcss.com/echarts/4.2.1/echarts.min.js"></script>
+<!-- AdminLTE App -->
+<script src="{% static 'adminlet-2.4.10/bower_components/jquery-knob/js/jquery.knob.js' %}"></script>
+<!-- page script -->
+
+<script type="text/javascript">
+    // 初始化echarts实例
+    var myChart = echarts.init(document.getElementById('lineChart'));
+
+    // 初始化折线图的数据
+    var lineData1 = [432607.132815617, 319772.528884571, 270125.750203204, 354070.410058332, 329708.234431847, 356730.739943927, 372219.340991689, 341117.452909581, 367376.155131606, 393757.999851821, 383645.128025241, 404474.506794083];
+    var lineData2 = [56620.7404311218, 19351.496826716, 12504.9576503296, 24461.6110783911, 15241.2230394114, 20531.1115850303, 19449.1645780939, 20984.7281688663, 25584.9434266737, 25410.0286483728, 29843.5295648018, 35365.2406654204];
+    var lineData3 = [40727.1531008243, 43391.2340202832, 31948.6330980863, 30607.3871927226, 36735.7992810574, 40575.4119118401, 37289.9565893993, 32914.4374259599, 25951.6654377993, 25240.0976624413, 31669.3066263343, 33277.9712908965];
+    var lineData4 = [77944.4153451725, 69959.6143977715, 53560.7175249832, 66993.229561917, 63913.6897059148, 70489.0785269001, 80334.8171435299, 76452.6696430419, 78719.0406951688, 83016.6118390423, 79991.1245071959, 83375.775154461];
+    var lineData5 = [433910.130820223, 482039.019116936, 377873.955936724, 332450.696575729, 437375.628593854, 318760.03947684, 401567.876138303, 490452.982013435, 463137.967921608, 516371.527045193, 516814.96496443, 500825.517412935];
+
+    // 初始显示折线1
+    renderLineChart(lineData1);
+
+    // 函数：渲染折线图
+    function renderLineChart(data) {
+        var option = {
+            tooltip: {
+                trigger: 'axis',
+                formatter: "{a} <br/>{b} : {c}"
+            },
+            legend: {
+                data: ['销量']
+            },
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: ['2024-1', '2024-2', '2024-3', '2024-4', '2024-5', '2024-6', '2024-7', '2024-8', '2024-9', '2024-10', '2024-11', '2024-12']
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [{
+                name: '折线图',
+                type: 'line',
+                data: data
+            }]
+        };
+        myChart.setOption(option);
+    }
+
+    // 函数：切换折线
+    function switchLine(lineNumber) {
+        if (lineNumber === 1) {
+            renderLineChart(lineData1);
+        } else if (lineNumber === 2) {
+            renderLineChart(lineData2);
+        } else if (lineNumber === 3) {
+            renderLineChart(lineData3);
+        } else if (lineNumber === 4) {
+            renderLineChart(lineData4);
+        } else if (lineNumber === 5) {
+            renderLineChart(lineData5);
+        }// 可以继续添加更多折线的切换逻辑
+    }
+    // 初始化echarts实例
+    var myChart1 = echarts.init(document.getElementById('lineChart1'));
+
+    // 初始化折线图的数据
+    var lineData6 = [450658.12500, 483552.75000, 508870.96875, 524488.06250, 534910.75000, 541646.00000, 546050.62500, 548875.75000, 550695.87500, 551864.50000, 552611.37500, 553088.87500];
+    var lineData7 = [45727.875000, 48975.804688, 51253.050781, 54035.593750, 56803.179688, 59299.496094, 61715.839844, 64044.257812, 66232.289062, 68306.468750, 70269.851562, 72078.023438];
+    var lineData8 = [36981.804688, 33299.324219, 28195.373047, 23105.142578, 19472.113281, 18202.740234, 18584.628906, 19619.568359, 20461.462891, 20951.826172, 21082.107422, 21017.400391];
+    var lineData9 = [76259.523438, 74495.570312, 73002.437500, 71944.171875, 70984.656250, 70148.710938, 69459.992188, 68875.054688, 68375.820312, 67954.132812, 67597.109375, 67294.210938];
+    var lineData10 = [423593.65625, 411941.25, 424872.5625, 428648.0, 426194.125, 430063.8125, 432717.625, 432821.75, 434376.25, 435916.875, 436511.6875, 437357.21875];
+
+    // 初始显示折线1
+    renderLineChart1(lineData6);
+
+    // 函数：渲染折线图
+    function renderLineChart1(data) {
+        var option = {
+            tooltip: {
+                trigger: 'axis',
+                formatter: "{a} <br/>{b} : {c}"
+            },
+            legend: {
+                data: ['销量']
+            },
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: ['2024-1', '2024-2', '2024-3', '2024-4', '2024-5', '2024-6', '2024-7', '2024-8', '2024-9', '2024-10', '2024-11', '2024-12']
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [{
+                name: '折线图',
+                type: 'line',
+                data: data
+            }]
+        };
+        myChart1.setOption(option);
+    }
+
+    // 函数：切换折线
+    function switchLine1(lineNumber) {
+        if (lineNumber === 1) {
+            renderLineChart1(lineData6);
+        } else if (lineNumber === 2) {
+            renderLineChart1(lineData7);
+        } else if (lineNumber === 3) {
+            renderLineChart1(lineData8);
+        } else if (lineNumber === 4) {
+            renderLineChart1(lineData9);
+        } else if (lineNumber === 5) {
+            renderLineChart1(lineData10);
+        }// 可以继续添加更多折线的切换逻辑
+    }
+
+    // 初始化echarts实例
+    var myChart2 = echarts.init(document.getElementById('lineChart2'));
+
+    // 初始化折线图的数据
+    var lineData11 = [416071.05490255, 414787.31142163, 422084.15757275, 428316.34888649, 432630.74648237, 437608.94415569, 441164.64509201, 444453.87400246, 449107.65777874, 452935.41289282, 456645.63990974, 461562.73681974];
+    var lineData12 = [45199.46695495, 44417.56652027, 44527.72741717, 44178.05706882, 43818.79514849, 43030.0339188, 42599.72214687, 42654.26998097, 42982.18890089, 43302.59705573, 43439.13139033, 43525.75344115];
+    var lineData13 = [31121.18656352, 35505.51494303, 35818.50663474, 36057.9101629, 35780.46547559, 35159.21604028, 34561.84478056, 33629.74452859, 32703.37800631, 31814.61457634, 31037.77369124, 30403.07313098];
+    var lineData14 = [68990.62271833, 68883.98337603, 68930.18441439, 68819.92051363, 68345.06952763, 67816.36726856, 67259.04549599, 66284.99132395, 65439.44949627, 64686.13093376, 63739.40109968, 63043.94498825];
+    var lineData15 = [685437.23060989, 694617.67840815, 759778.69088411, 825602.24751139, 893512.44700623, 976899.75979757, 1067944.66726351, 1158896.8364687, 1261005.69364834, 1358830.54239368, 1455402.49659634, 1550242.82458591];
+
+    // 初始显示折线1
+    renderLineChart2(lineData11);
+
+    // 函数：渲染折线图
+    function renderLineChart2(data) {
+        var option = {
+            tooltip: {
+                trigger: 'axis',
+                formatter: "{a} <br/>{b} : {c}"
+            },
+            legend: {
+                data: ['销量']
+            },
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: ['2024-1', '2024-2', '2024-3', '2024-4', '2024-5', '2024-6', '2024-7', '2024-8', '2024-9', '2024-10', '2024-11', '2024-12']
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [{
+                name: '折线图',
+                type: 'line',
+                data: data
+            }]
+        };
+        myChart2.setOption(option);
+    }
+
+    // 函数：切换折线
+    function switchLine2(lineNumber) {
+        if (lineNumber === 1) {
+            renderLineChart2(lineData11);
+        } else if (lineNumber === 2) {
+            renderLineChart2(lineData12);
+        } else if (lineNumber === 3) {
+            renderLineChart2(lineData13);
+        } else if (lineNumber === 4) {
+            renderLineChart2(lineData14);
+        } else if (lineNumber === 5) {
+            renderLineChart2(lineData15);
+        }// 可以继续添加更多折线的切换逻辑
+    }
+
+    // 初始化echarts实例
+    var myChart3 = echarts.init(document.getElementById('lineChart3'));
+
+    // 初始化折线图的数据
+    var lineData16 = [393805.792070333,394855.574359486,395425.173802526,395707.047244515,395859.341228809,395935.01069121,395975.736840605,395996.046703088,396006.939381034,396012.389683861,396015.303489307,396016.765896626];
+    var lineData17 = [42866.103947502,42697.9689475098,42476.6641282568,42403.4154791532,42369.9539164323,42356.2174773127,42350.3897415598,42347.942884427,42346.9121818284,42346.4784581379,42346.2958867783,42346.2190430785];
+    var lineData18 = [43066.3932557665,43970.357110785,44443.4914252238,44690.1212216824,44819.3829678255,44886.6406916119,44921.9767162135,44940.3034923979,44949.9735740126,44954.9601233505,44957.6114600222,44958.9647342166];
+    var lineData19 = [70638.2186216759,71615.9152464789,66745.9465826686,68868.4148724011,64806.5550313298,67499.4165342624,63840.2224432524,66817.2824310461,63358.7345509612,66477.3911863379,63118.8295307166,66308.0288005457];
+    var lineData20 = [435200.594097706,451662.081896842,381414.562338317,434821.243233744,450687.088328392,382750.340103518,434453.186067499,449744.724486141,384042.785129618,434096.089752322,448833.899649928,385293.302216035];
+
+    // 初始显示折线1
+    renderLineChart3(lineData16);
+
+    // 函数：渲染折线图
+    function renderLineChart3(data) {
+        var option = {
+            tooltip: {
+                trigger: 'axis',
+                formatter: "{a} <br/>{b} : {c}"
+            },
+            legend: {
+                data: ['销量']
+            },
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: ['2024-1', '2024-2', '2024-3', '2024-4', '2024-5', '2024-6', '2024-7', '2024-8', '2024-9', '2024-10', '2024-11', '2024-12']
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [{
+                name: '折线图',
+                type: 'line',
+                data: data
+            }]
+        };
+        myChart3.setOption(option);
+    }
+
+    // 函数：切换折线
+    function switchLine3(lineNumber) {
+        if (lineNumber === 1) {
+            renderLineChart3(lineData16);
+        } else if (lineNumber === 2) {
+            renderLineChart3(lineData17);
+        } else if (lineNumber === 3) {
+            renderLineChart3(lineData18);
+        } else if (lineNumber === 4) {
+            renderLineChart3(lineData19);
+        } else if (lineNumber === 5) {
+            renderLineChart3(lineData20);
+        }// 可以继续添加更多折线的切换逻辑
+    }
+</script>
+
+{% endblock %}

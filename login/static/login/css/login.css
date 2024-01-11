@@ -1,0 +1,70 @@
+/* 全局样式 */
+body {
+  height: 100vh; /* 使用视口高度作为高度单位，确保占据整个屏幕 */
+  margin: 0; /* 重置默认的 body margin */
+  font-family: Arial, sans-serif; /* 设置通用字体 */
+  background-image: url('../image/car.jpg'); /* 根据文件路径设置背景图片 */
+  background-size: cover; /* 背景图片尺寸适应 */
+  background-position: center; /* 图片居中显示 */
+  display: flex; /* 使用 Flexbox 布局 */
+  justify-content: center; /* 内容水平居中 */
+  align-items: center; /* 内容垂直居中 */
+}
+
+/* 登录表单样式 */
+.form-login {
+  width: 300px; /* 设置表单宽度 */
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  position: absolute; /* 使用绝对定位 */
+  top: 50%; /* 距离顶部50% */
+  left: 50%; /* 距离左侧50% */
+  transform: translate(-50%, -50%); /* 使用transform调整表单位置 */
+  background-color: rgba(199, 210, 243, 0.47); /* 设置半透明背景 */
+}
+
+/* 表单控件样式 */
+.form-login .form-control {
+  margin-bottom: 10px; /* 统一控件之间的间距 */
+}
+
+.form-login input[type="text"],
+.form-login input[type="password"] {
+  width: calc(100%); /* 计算控件宽度，减去两侧 padding */
+  border: 1px solid #ccc; /* 添加边框 */
+  border-radius: 10px; /* 圆角边框 */
+}
+
+.form-login button {
+  width: 100%; /* 设定按钮宽度为表单的一半 */
+  margin: 3% 0%; /* 居中按钮 */
+  padding: 6px;
+  background-color: #4285f4;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 18px;
+  display: block;
+}
+
+.text-success {
+  color: #01060e !important;
+}
+
+.form-login input[type="text"]:focus,
+.form-login input[type="password"]:focus {
+  outline: none; /* 去除获取焦点时的默认轮廓样式 */
+  border-color: #007bff; /* 设置获取焦点时的边框颜色 */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* 添加获取焦点时的阴影效果 */
+}
+
+/* 链接样式 */
+form a {
+  display: block; /* 改为块级元素 */
+  text-align: center; /* 居中显示 */
+  font-size: 16px; /* 修改字体大小 */
+  color: #01060e; /* 设置链接颜色 */
+  text-decoration: none; /* 去除下划线 */
+}
